@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { IRecipe } from 'src/app/models/interfaces/recipe';
 
 @Component({
@@ -9,5 +9,5 @@ import { IRecipe } from 'src/app/models/interfaces/recipe';
   styleUrl: './recipe-item.component.scss'
 })
 export class RecipeItemComponent {
-  // recipe = input.required<IRecipe>()
+  recipe = input.required<IRecipe>()
 }
