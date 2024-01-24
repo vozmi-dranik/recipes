@@ -1,1 +1,3 @@
-<app-recipe-item/>
+@for (recipe of recipes$ | async; track recipe) {
+  <app-recipe-item [recipe]="recipe"/>
+}
