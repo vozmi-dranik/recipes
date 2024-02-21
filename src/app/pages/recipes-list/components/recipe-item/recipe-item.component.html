@@ -1,1 +1,16 @@
-<p>{{ recipe().name }}</p>
+<div class="flex flex-col gap-2 border-2 border-amber-300">
+  <h3>{{ recipe().name }}</h3>
+  <div>
+    @for (ingredient of recipe().ingredients; track ingredient) {
+    <p>{{ ingredient.name }}
+    {{ ingredient.count }}
+    {{ ingredient.measure }}
+    </p>
+    }
+  </div>
+  @for (step of recipe().steps; track step) {
+  <p>{{ step.description }}</p>
+  }
+</div>
+
+

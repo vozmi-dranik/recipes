@@ -5,9 +5,11 @@
   <div class="flex flex-col p-3">
     <input #search (input)="findRecipe(search.value)">
     <h2 class="text-fuchsia-900 underline">Choose your favorite recipe</h2>
+    <div class="flex gap-2">
     @for (recipe of recipes(); track null) {
       <app-recipe-item [recipe]="recipe"/>
-    }
+      }
+    </div>
   </div>
 </div>
 
