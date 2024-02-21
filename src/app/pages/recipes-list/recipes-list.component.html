@@ -4,9 +4,11 @@
   </div>
   <div class="flex flex-col p-3">
     <h2 class="text-fuchsia-900 underline">Choose your favorite recipe</h2>
-    @for (recipe of recipes$ | async; track recipe) {
+    <div class="flex gap-2">
+      @for (recipe of recipes$ | async; track recipe) {
       <app-recipe-item [recipe]="recipe"/>
-    }
+      }
+    </div>
   </div>
 </div>
 

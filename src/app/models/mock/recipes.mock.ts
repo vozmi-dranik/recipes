@@ -6,10 +6,11 @@ export const RecipesMock: IRecipe[] = [
   { id: 3, name: 'third', ingredients: [{ name: 'lemon', count: 1, measure: 'pcs', }], steps: [{description: 'Make totally smth else'}] },
   { id: 4, name: 'fourth', ingredients: [
     { name: 'lemon', count: 1, measure: 'pcs', },
-      { name: 'lemon', count: 1, measure: 'pcs', }
+      { name: 'water', count: 100, measure: 'ml', }
     ],
     steps: [
-    {description: 'Make totally smth else'}
+    {description: 'Make totally smth else'},
+      {description: 'Make totally smth else'}
     ] },
 ];
 
