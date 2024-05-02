@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-2 border-2 border-amber-300">
-  <h3>{{ recipe().name }}</h3>
+  <a routerLink="{{ recipeLink() }}"><h3>{{ recipe().name }}</h3></a>
   <div>
     @for (ingredient of recipe().ingredients; track ingredient) {
     <p>{{ ingredient.name }}

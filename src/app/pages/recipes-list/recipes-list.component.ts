@@ -12,7 +12,8 @@ import { RecipesStore } from 'src/app/store/recipes-store';
   ],
   templateUrl: './recipes-list.component.html',
   styleUrl: './recipes-list.component.scss',
-  providers: [RecipesStore],
+  // todo: uncomment and use store only for this component when backend is ready
+  // providers: [RecipesStore],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecipesListComponent implements OnInit {
