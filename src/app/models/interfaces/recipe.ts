@@ -1,5 +1,5 @@
 export interface IRecipe {
-  id: number;
+  id: number | string;
   name: string;
   ingredients: IIngredient[];
   steps: IStep[];

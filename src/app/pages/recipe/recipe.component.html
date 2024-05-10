@@ -1,0 +1,15 @@
+@if (recipe(); as recipe) {
+  <h1>{{ recipe.name }}</h1>
+
+  <div>
+    @for (ingredient of recipe.ingredients; track ingredient) {
+      <p>{{ ingredient.name }}
+        {{ ingredient.count }}
+        {{ ingredient.measure }}
+      </p>
+    }
+  </div>
+  @for (step of recipe.steps; track step) {
+    <p>{{ step.description }}</p>
+  }
+}
