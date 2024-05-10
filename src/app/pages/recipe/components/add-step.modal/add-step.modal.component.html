@@ -1,0 +1,23 @@
+<md-dialog [open]="open()" [autofocus]="false">
+  <div slot="headline">Title</div>
+  <div slot="content">
+    <app-custom-dropzone/>
+    @if (editor) {
+      <ngx-editor-menu [editor]="editor" [toolbar]="toolbar()"></ngx-editor-menu>
+      <ngx-editor
+        [editor]="editor"
+        (focusin)="onEditorFocusIn()"
+      >
+        <ngx-editor-floating-menu [editor]="editor"></ngx-editor-floating-menu>
+      </ngx-editor>
+      <!--    <div class="editor">-->
+        <!--      <ngx-editor [editor]="editor" formControlName="editorContent">-->
+        <!--        <ngx-editor-floating-menu [editor]="editor"></ngx-editor-floating-menu>-->
+        <!--      </ngx-editor>-->
+        <!--    </div>-->
+    }
+  </div>
+  <div slot="actions">
+    <md-text-button>Ok</md-text-button>
+  </div>
+</md-dialog>
