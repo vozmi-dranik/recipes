@@ -12,4 +12,5 @@
   @for (step of recipe.steps; track step) {
     <p>{{ step.description }}</p>
   }
+  <button mat-stroked-button (click)="addStep()">add step</button>
 }
