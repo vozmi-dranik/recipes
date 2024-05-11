@@ -1,8 +1,38 @@
-<h2 mat-dialog-title>Delete file</h2>
+<h2 mat-dialog-title>Add step</h2>
 <mat-dialog-content>
-  Would you like to delete cat.jpeg?
+  <form class="flex flex-col pt-4">
+    <mat-form-field appearance="outline" class="w-[500px] max-w-full">
+      <mat-label>Step image</mat-label>
+      <ngx-mat-dropzone>
+        <input type="file" fileInput [formControl]="fileCtrl" />
+        @if (fileCtrl.value) {
+          <mat-chip-row (removed)="clear()">
+            {{ fileCtrl.value.name }}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        }
+      </ngx-mat-dropzone>
+      <mat-icon matSuffix color="primary">cloud_upload</mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        [cdkAutosizeMinRows]="3"
+        [cdkAutosizeMaxRows]="10"
+      ></textarea>
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
-<mat-dialog-actions>
+<mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>No</button>
   <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
 </mat-dialog-actions>
