@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { DropzoneMaterialModule } from '@ngx-dropzone/material';
 import { MatIconModule } from '@angular/material/icon';
 import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInput } from '@angular/material/input';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -32,10 +32,26 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
   styleUrl: './add-step-modal.component.scss'
 })
 export class AddStepModalComponent {
-  dialogRef = inject<MatDialogRef<AddStepModalComponent>>(MatDialogRef);
-  fileCtrl = new FormControl();
+  private readonly _fb: FormBuilder = inject(FormBuilder);
+  readonly form: FormGroup = this.initForm();
+  private _dialogRef: MatDialogRef<AddStepModalComponent> = inject(MatDialogRef);
 
-  clear() {
-    this.fileCtrl.setValue(null);
+  clearImage(): void {
+    this.form.get('image')?.setValue(null);
+  }
+
+  onSubmit(): void {
+    this.form.markAllAsTouched();
+    if(this.form.valid){
+      this._dialogRef.close(this.form.value);
+    }
+  }
+
+  private initForm(): FormGroup {
+    return this._fb.group({
+      image: [''],
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.required, Validators.minLength(3)]]
+    });
   }
 }
