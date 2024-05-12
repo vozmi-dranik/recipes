@@ -9,8 +9,13 @@
       </p>
     }
   </div>
-  @for (step of recipe.steps; track step) {
-    <p>{{ step.description }}</p>
+  @for (step of recipe.steps; track step; let i = $index) {
+    <div>
+      <h5>step {{ i }}</h5>
+      <h3>{{ step.title }}</h3>
+      <p>{{ step?.image }}</p>
+      <p>{{ step.description }}</p>
+    </div>
   }
   <button mat-stroked-button (click)="addStep()">add step</button>
 }

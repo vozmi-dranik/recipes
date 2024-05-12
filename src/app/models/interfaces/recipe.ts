@@ -14,5 +14,6 @@ export interface IIngredient {
 
 export interface IStep {
   description: string;
+  title?: string;
   image?: string;
 }
