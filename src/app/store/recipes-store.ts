@@ -19,10 +19,12 @@ const initialState: RecipesState = {
 };
 
 export const RecipesStore = signalStore(
+  // todo: remove when bakend is ready
+  { providedIn: 'root' },
   withState(initialState),
   withComputed(({ recipes, filter }) => ({
-    booksCount: computed(() => recipes().length),
-    sortedBooks: computed(() => {
+    recipesCount: computed(() => recipes().length),
+    sortedRecipes: computed(() => {
       const direction = filter.order() === 'asc' ? 1 : -1;
 
       return [...recipes()].sort((a, b) =>
