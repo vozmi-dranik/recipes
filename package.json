@@ -24,14 +24,15 @@
     "@angular/platform-server": "^18.0.0",
     "@angular/router": "^18.0.0",
     "@angular/ssr": "^18.0.1",
-    "@ngrx/operators": "^17.2.0",
-    "@ngrx/signals": "^17.2.0",
-    "@ngx-dropzone/cdk": "^17.3.0",
-    "@ngx-dropzone/material": "^17.3.0",
+    "@ngrx/operators": "^18.0.0-beta.1",
+    "@ngrx/signals": "^18.0.0-beta.1",
+    "apollo-angular": "^7.0.2",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.2"
+    "zone.js": "~0.14.2",
+    "@apollo/client": "^3.0.0",
+    "graphql": "^16.8.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.1",
