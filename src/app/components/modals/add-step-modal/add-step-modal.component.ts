@@ -2,9 +2,9 @@ import { Component, inject } from '@angular/core';
 import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { DropzoneMaterialModule } from '@ngx-dropzone/material';
+// import { DropzoneMaterialModule } from '@ngx-dropzone/material';
 import { MatIconModule } from '@angular/material/icon';
-import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
+// import { DropzoneCdkModule } from '@ngx-dropzone/cdk';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInput } from '@angular/material/input';
@@ -20,8 +20,8 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
     MatButton,
     MatDialogClose,
     MatFormFieldModule,
-    DropzoneCdkModule,
-    DropzoneMaterialModule,
+    // DropzoneCdkModule,
+    // DropzoneMaterialModule,
     MatIconModule,
     MatChipsModule,
     ReactiveFormsModule,

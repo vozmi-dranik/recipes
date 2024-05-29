@@ -1,6 +1,7 @@
 export interface IRecipe {
   id: number | string;
   name: string;
+  description: string;
   ingredients: IIngredient[];
   steps: IStep[];
 }
