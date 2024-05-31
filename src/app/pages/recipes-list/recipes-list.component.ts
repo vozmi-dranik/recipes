@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { RecipeItemComponent } from 'src/app/pages/recipes-list/components/recipe-item/recipe-item.component';
 import { AsyncPipe } from '@angular/common';
 import { RecipesStore } from 'src/app/store/recipes-store';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-recipes-list',
@@ -9,6 +11,10 @@ import { RecipesStore } from 'src/app/store/recipes-store';
   imports: [
     RecipeItemComponent,
     AsyncPipe,
+    MatInput,
+    MatFormField,
+    MatLabel,
+    MatButton,
   ],
   templateUrl: './recipes-list.component.html',
   styleUrl: './recipes-list.component.scss',
@@ -22,6 +28,10 @@ export class RecipesListComponent implements OnInit {
 
   findRecipe(value: string) {
     this._store.updateQuery(value);
+  }
+
+  addRecipe() {
+
   }
 
   ngOnInit(): void {

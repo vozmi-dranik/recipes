@@ -54,6 +54,9 @@ export const RecipesStore = signalStore(
           );
         })
       )
-    )
+    ),
+    // addRecipe: rxMethod<{ name: string, description: string }> (
+    //   pipe
+    // )
   }))
 );
