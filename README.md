@@ -3,7 +3,8 @@
 ### This project is an implementation of a recipes book. Users will be able to watch recipes and create their own.
 
 - It is currently under development.
-- Development is in the dev branch.
+- Development is underway in the dev branch.
+- Backend development is underway in this project: https://github.com/vozmi-dranik/recipes-back
 
 ___
 ___
