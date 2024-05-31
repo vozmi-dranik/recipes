@@ -1,38 +1,16 @@
 import { inject, Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
-import { ApolloQueryResult } from '@apollo/client';
-import { IRecipe } from 'src/app/models/interfaces/recipe';
 import { map, Observable } from 'rxjs';
+import { AllRecipesGQL, AllRecipesQuery } from 'graphql/generated';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private apolloProvider =  inject(Apollo);
-  // apollo = this.apolloProvider.use('newClientName');
+  private readonly _allRecipesGQL = inject(AllRecipesGQL);
 
-
-  constructor(private readonly apollo: Apollo) {}
-
-  getAllRecipes(): Observable<IRecipe[]> {
-    return this.apollo.watchQuery<{ recipes: IRecipe[] }>({
-      query: gql`
-        query {
-          recipes {
-            id
-            name
-            description
-            ingredients {
-              id
-              name
-            }
-            steps {
-              id
-            }
-          }
-        }
-      `,
-    }).valueChanges.pipe(
-      map(({ data }) => data.recipes));
+  getAllRecipes(): Observable<AllRecipesQuery['recipes']> {
+    return this._allRecipesGQL.watch().valueChanges.pipe(
+      map(({ data }) => data.recipes)
+    );
   }
 }
