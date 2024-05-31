@@ -1,7 +1,6 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RecipesStore } from 'src/app/store/recipes-store';
-import { IRecipe, IStep } from 'src/app/models/interfaces/recipe';
+import { IStep } from 'src/app/models/interfaces/recipe';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { AddStepModalComponent } from 'src/app/components/modals/add-step-modal/add-step-modal.component';
@@ -27,9 +26,10 @@ export class RecipeComponent implements OnInit {
   addStep() {
     this.dialog.open(AddStepModalComponent).afterClosed()
       .pipe(filter(arg => !!arg))
-      // todo: connect with the backend and add the interface
       .subscribe((step: IStep) => {
-        this.recipe()?.steps.push(step);
+        const recipe = this.recipe()!;
+        recipe.steps = [...recipe.steps, step];
+        this._store.updateRecipe(recipe);
       });
   }
 

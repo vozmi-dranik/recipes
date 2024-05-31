@@ -16,6 +16,7 @@ const initialState: CurrentRecipeState = {
   isLoading: false,
 };
 
+
 export const CurrentRecipeStore = signalStore(
   withState<CurrentRecipeState>(initialState),
   withMethods((store, recipesService = inject(RecipesService)) => ({
@@ -27,8 +28,8 @@ export const CurrentRecipeStore = signalStore(
         switchMap((id) => {
           return recipesService.getRecipeById(id).pipe(
             tapResponse({
-          //     todo: change interfaces with the data from graphql types
-          // @ts-ignore
+              //     todo: change interfaces with the data from graphql types
+              // @ts-ignore
               next: (recipe) => patchState(store, { recipe }),
               error: console.error,
               finalize: () => patchState(store, { isLoading: false }),
@@ -36,6 +37,21 @@ export const CurrentRecipeStore = signalStore(
           );
         })
       )
+    ),
+    // @ts-ignore
+    updateRecipe: rxMethod<IRecipe>(
+      tap((recipe) => patchState(store, { recipe })),
+      // todo: uncomment when backend is ready
+      // tap((recipe) => patchState(store, { isLoading: true })),
+      // switchMap((data: IRecipe) => {
+      //   return recipesService.updateRecipe(id).pipe(
+      //     tapResponse({
+      //       next: (recipe) => patchState(store, { recipe }),
+      //       error: console.error,
+      //       finalize: () => patchState(store, { isLoading: false }),
+      //     })
+      //   );
+      // })
     )
   }))
-)
+);
