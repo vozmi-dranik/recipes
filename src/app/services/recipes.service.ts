@@ -13,4 +13,8 @@ export class RecipesService {
     );
     // return of(RecipesMock.filter(({ name }) => name.includes(query)));
   }
+
+  getRecipeById(id: string) {
+    return this._apiService.getRecipe(id);
+  }
 }

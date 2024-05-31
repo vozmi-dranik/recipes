@@ -1,5 +1,6 @@
 @if (recipe(); as recipe) {
   <h1>{{ recipe.name }}</h1>
+  <h2>{{ recipe.description }}</h2>
   <div>
     @for (ingredient of recipe.ingredients; track ingredient) {
       <p>{{ ingredient.name }}
