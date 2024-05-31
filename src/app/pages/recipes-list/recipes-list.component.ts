@@ -4,6 +4,11 @@ import { AsyncPipe } from '@angular/common';
 import { RecipesStore } from 'src/app/store/recipes-store';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { AddStepModalComponent } from 'src/app/components/modals/add-step-modal/add-step-modal.component';
+import { filter } from 'rxjs';
+import { IRecipe, IStep } from 'src/app/models/interfaces/recipe';
+import { AddRecipeModalComponent } from 'src/app/components/modals/add-recipe-modal/add-recipe-modal.component';
 
 @Component({
   selector: 'app-recipes-list',
@@ -24,6 +29,7 @@ import { MatButton } from '@angular/material/button';
 })
 export class RecipesListComponent implements OnInit {
   private readonly _store = inject(RecipesStore);
+  private readonly dialog = inject(MatDialog);
   readonly recipes = this._store.recipes;
 
   findRecipe(value: string) {
@@ -31,7 +37,11 @@ export class RecipesListComponent implements OnInit {
   }
 
   addRecipe() {
-
+    this.dialog.open(AddRecipeModalComponent).afterClosed()
+      .pipe(filter(arg => !!arg))
+      .subscribe((recipeInputData: { name: string, description: string }) => {
+        this._store.addRecipe(recipeInputData);
+      });
   }
 
   ngOnInit(): void {

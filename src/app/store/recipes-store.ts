@@ -5,6 +5,8 @@ import { IRecipe } from 'src/app/models/interfaces/recipe';
 import { computed, inject } from '@angular/core';
 import { debounceTime, distinctUntilChanged, pipe, switchMap, tap } from 'rxjs';
 import { RecipesService } from 'src/app/services/recipes.service';
+import { state } from '@angular/animations';
+import { Router } from '@angular/router';
 
 type RecipesState = {
   recipes: IRecipe[];
@@ -32,7 +34,7 @@ export const RecipesStore = signalStore(
       );
     }),
   })),
-  withMethods((store, recipesService = inject(RecipesService)) => ({
+  withMethods((store, recipesService = inject(RecipesService), router = inject(Router)) => ({
     updateQuery(query: string): void {
       patchState(store, (state) => ({ filter: { ...state.filter, query } }));
     },
@@ -55,8 +57,26 @@ export const RecipesStore = signalStore(
         })
       )
     ),
-    // addRecipe: rxMethod<{ name: string, description: string }> (
-    //   pipe
-    // )
+    addRecipe: rxMethod<{ name: string, description: string }>(
+      pipe(
+        switchMap((recipeInputData) => {
+          return recipesService.addRecipe(recipeInputData).pipe(
+            tapResponse({
+              next: (recipe) => {
+                patchState(store, (state) => ({
+                  recipes: [
+                    ...state.recipes,
+                    { id: recipe?.id || 0, name: recipe?.name || '', description: recipe?.description ?? '', ingredients: [], steps: [] }
+                  ],
+                }))
+                router.navigate(['/recipe', recipe?.id]);
+              },
+              error: console.error,
+              finalize: () => patchState(store, { isLoading: false }),
+            })
+          );
+        })
+      )
+    )
   }))
 );

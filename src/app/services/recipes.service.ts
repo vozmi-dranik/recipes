@@ -17,4 +17,8 @@ export class RecipesService {
   getRecipeById(id: string) {
     return this._apiService.getRecipe(id);
   }
+
+  addRecipe(recipeInputData: { name: string, description: string }) {
+    return this._apiService.addRecipe(recipeInputData);
+  }
 }
