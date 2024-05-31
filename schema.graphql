@@ -1,4 +1,4 @@
-
+#this file isn't necessary and used only to hide warnings in the generated.ts
 type Recipe {
   id: ID!
   name: String!
