@@ -5,9 +5,7 @@ import { RecipesStore } from 'src/app/store/recipes-store';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { AddStepModalComponent } from 'src/app/components/modals/add-step-modal/add-step-modal.component';
 import { filter } from 'rxjs';
-import { IRecipe, IStep } from 'src/app/models/interfaces/recipe';
 import { AddRecipeModalComponent } from 'src/app/components/modals/add-recipe-modal/add-recipe-modal.component';
 
 @Component({
