@@ -2,21 +2,21 @@
 <mat-dialog-content>
   @if (form) {
     <form class="flex flex-col pt-4" [formGroup]="form">
-<!--      <mat-form-field appearance="outline" class="w-[500px] max-w-full">-->
-<!--        <mat-label>Step image</mat-label>-->
-<!--        <ngx-mat-dropzone>-->
-<!--          <input type="file" fileInput formControlName="image"/>-->
-<!--          @if (form.get('image')?.value; as img) {-->
-<!--            <mat-chip-row (removed)="clearImage()">-->
-<!--              {{ img.name }}-->
-<!--              <button matChipRemove>-->
-<!--                <mat-icon>cancel</mat-icon>-->
-<!--              </button>-->
-<!--            </mat-chip-row>-->
-<!--          }-->
-<!--        </ngx-mat-dropzone>-->
-<!--        <mat-icon matSuffix color="primary">cloud_upload</mat-icon>-->
-<!--      </mat-form-field>-->
+      <mat-form-field appearance="outline" class="w-[500px] max-w-full">
+        <mat-label>Step image</mat-label>
+        <ngx-mat-dropzone>
+          <input type="file" fileInput formControlName="image"/>
+          @if (form.get('image')?.value; as img) {
+            <mat-chip-row (removed)="clearImage()">
+              {{ img.name }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          }
+        </ngx-mat-dropzone>
+        <mat-icon matSuffix color="primary">cloud_upload</mat-icon>
+      </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Title</mat-label>
         <input matInput formControlName="title">
