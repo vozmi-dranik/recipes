@@ -1,6 +1,7 @@
 <div class="flex flex-col gap-2 border-2 border-amber-300">
+  <button mat-icon-button (click)="openDeleteRecipeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
   <a routerLink="{{ recipeLink() }}"><h3>{{ recipe().name }}</h3></a>
   <h4>{{ recipe().description }}</h4>
 </div>
-
-

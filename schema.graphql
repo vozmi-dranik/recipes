@@ -30,6 +30,7 @@ type Query {
 
 type Mutation {
   createRecipe(recipeData: RecipeInput): Recipe
+  deleteRecipe(id: ID): Recipe
 }
 
 input RecipeInput {

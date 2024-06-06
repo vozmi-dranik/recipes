@@ -15,6 +15,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  DateTime: { input: any; output: any; }
 };
 
 export type Ingredient = {
@@ -35,10 +36,23 @@ export type IngredientInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createRecipe?: Maybe<Recipe>;
+  deleteRecipe?: Maybe<Recipe>;
+  updateRecipe?: Maybe<Recipe>;
 };
 
 
 export type MutationCreateRecipeArgs = {
+  recipeData?: InputMaybe<RecipeInput>;
+};
+
+
+export type MutationDeleteRecipeArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateRecipeArgs = {
+  id: Scalars['ID']['input'];
   recipeData?: InputMaybe<RecipeInput>;
 };
 
@@ -55,11 +69,13 @@ export type QueryRecipeArgs = {
 
 export type Recipe = {
   __typename?: 'Recipe';
+  createdAt: Scalars['DateTime']['output'];
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   ingredients?: Maybe<Array<Maybe<Ingredient>>>;
   name: Scalars['String']['output'];
   steps?: Maybe<Array<Maybe<Step>>>;
+  updatedAt: Scalars['DateTime']['output'];
 };
 
 export type RecipeInput = {
@@ -102,6 +118,13 @@ export type CreateRecipeMutationVariables = Exact<{
 
 
 export type CreateRecipeMutation = { __typename?: 'Mutation', createRecipe?: { __typename?: 'Recipe', id: string, name: string, description: string } | null };
+
+export type DeleteRecipeMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteRecipeMutation = { __typename?: 'Mutation', deleteRecipe?: { __typename?: 'Recipe', id: string, name: string, description: string } | null };
 
 export const AllRecipesDocument = gql`
     query allRecipes {
@@ -170,6 +193,26 @@ export const CreateRecipeDocument = gql`
   })
   export class CreateRecipeGQL extends Apollo.Mutation<CreateRecipeMutation, CreateRecipeMutationVariables> {
     document = CreateRecipeDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteRecipeDocument = gql`
+    mutation DeleteRecipe($id: ID!) {
+  deleteRecipe(id: $id) {
+    id
+    name
+    description
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteRecipeGQL extends Apollo.Mutation<DeleteRecipeMutation, DeleteRecipeMutationVariables> {
+    document = DeleteRecipeDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

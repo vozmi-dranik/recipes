@@ -21,4 +21,8 @@ export class RecipesService {
   addRecipe(recipeInputData: { name: string, description: string }) {
     return this._apiService.addRecipe(recipeInputData);
   }
+
+  removeRecipe(recipeId: string | number) {
+    return this._apiService.removeRecipe(recipeId);
+  }
 }

@@ -76,6 +76,26 @@ export const RecipesStore = signalStore(
           );
         })
       )
+    ),
+
+    removeRecipe: rxMethod<string | number>(
+      pipe(
+        switchMap((recipeId) => {
+          return recipesService.removeRecipe(recipeId).pipe(
+            tapResponse({
+              next: () => {
+                patchState(store, (state) => ({
+                  recipes: [
+                    ...state.recipes.filter((recipe) => recipe.id !== recipeId)
+                  ],
+                }))
+              },
+              error: console.error,
+              finalize: () => patchState(store, { isLoading: false }),
+            })
+          );
+        })
+      )
     )
   }))
 );
