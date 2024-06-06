@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Add step</h2>
+<mat-dialog-content>
+  @if (form) {
+    <form class="flex flex-col pt-4" [formGroup]="form">
+      <mat-form-field appearance="outline" class="w-[500px] max-w-full">
+        <mat-label>Step image</mat-label>
+        <ngx-mat-dropzone>
+          <input type="file" fileInput formControlName="image"/>
+          @if (form.get('image')?.value; as img) {
+            <mat-chip-row (removed)="clearImage()">
+              {{ img.name }}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          }
+        </ngx-mat-dropzone>
+        <mat-icon matSuffix color="primary">cloud_upload</mat-icon>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title">
+        <mat-error>
+          @if(form.get('title')?.errors; as errors){
+            @if(errors['required']) {
+              Tile is required
+            } @else {
+              Minimum title length is 3
+            }
+          }
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          [cdkAutosizeMinRows]="3"
+          [cdkAutosizeMaxRows]="10"
+        ></textarea>
+        <mat-error>
+          @if(form.get('description')?.errors; as errors){
+            @if(errors['required']) {
+              Description is required
+            } @else {
+              Minimum description length is 3
+            }
+          }
+        </mat-error>
+      </mat-form-field>
+    </form>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>No</button>
+  <button mat-button cdkFocusInitial (click)="onSubmit()">Ok</button>
+</mat-dialog-actions>
