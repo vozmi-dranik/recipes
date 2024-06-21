@@ -1,11 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IStep } from 'src/app/models/interfaces/recipe';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { AddStepModalComponent } from 'src/app/components/modals/add-step-modal/add-step-modal.component';
 import { filter } from 'rxjs';
 import { CurrentRecipeStore } from 'src/app/store/current-recipe.store';
+import { IngredientInput, Recipe, StepInput } from 'graphql/generated';
+import { AddIngredientModalComponent } from 'src/app/components/modals/add-ingredient-modal/add-ingredient-modal.component';
 
 @Component({
   selector: 'app-recipe',
@@ -20,16 +21,22 @@ import { CurrentRecipeStore } from 'src/app/store/current-recipe.store';
 export class RecipeComponent implements OnInit {
   private readonly _store = inject(CurrentRecipeStore);
   private readonly _activatedRoute = inject(ActivatedRoute);
-  readonly recipe = this._store.recipe;
+  readonly recipe: Signal<Recipe | null> = this._store.recipe;
   readonly dialog = inject(MatDialog);
 
   addStep() {
     this.dialog.open(AddStepModalComponent).afterClosed()
       .pipe(filter(arg => !!arg))
-      .subscribe((step: IStep) => {
-        const recipe = this.recipe()!;
-        recipe.steps = [...recipe.steps, step];
-        this._store.updateRecipe(recipe);
+      .subscribe((step: StepInput) => {
+        this._store.addStep(step);
+      });
+  }
+
+  addIngredient() {
+    this.dialog.open(AddIngredientModalComponent).afterClosed()
+      .pipe(filter(arg => !!arg))
+      .subscribe((ingredient: IngredientInput) => {
+        this._store.addIngredient(ingredient);
       });
   }
 

@@ -1,14 +1,14 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { tapResponse } from '@ngrx/operators';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { IRecipe } from 'src/app/models/interfaces/recipe';
 import { computed, inject } from '@angular/core';
-import { debounceTime, distinctUntilChanged, pipe, switchMap, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, pipe, switchMap, tap } from 'rxjs';
 import { RecipesService } from 'src/app/services/recipes.service';
 import { Router } from '@angular/router';
+import { Recipe, RecipeInput } from 'graphql/generated';
 
 type RecipesState = {
-  recipes: IRecipe[];
+  recipes: Recipe[];
   isLoading: boolean;
   filter: { query: string; order: 'asc' | 'desc' };
 };
@@ -48,7 +48,7 @@ export const RecipesStore = signalStore(
         switchMap((query) => {
           return recipesService.getByQuery(query).pipe(
             tapResponse({
-              next: (recipes) => patchState(store, { recipes }),
+              next: (recipes: Recipe[]) => patchState(store, { recipes }),
               error: console.error,
               finalize: () => patchState(store, { isLoading: false }),
             })
@@ -56,18 +56,22 @@ export const RecipesStore = signalStore(
         })
       )
     ),
-    addRecipe: rxMethod<{ name: string, description: string }>(
+    addRecipe: rxMethod<RecipeInput>(
       pipe(
         switchMap((recipeInputData) => {
           return recipesService.addRecipe(recipeInputData).pipe(
             tapResponse({
               next: (recipe) => {
-                patchState(store, (state) => ({
-                  recipes: [
-                    ...state.recipes,
-                    { id: recipe?.id || 0, name: recipe?.name || '', description: recipe?.description ?? '', ingredients: [], steps: [] }
-                  ],
-                }))
+                if (recipe) {
+                  patchState(store, (state) => ({
+                    recipes: [
+                      ...state.recipes,
+                      recipe
+                    ],
+                  }));
+                } else {
+                  throw new Error('Recipe not added');
+                }
                 router.navigate(['/recipe', recipe?.id]);
               },
               error: console.error,
@@ -78,7 +82,7 @@ export const RecipesStore = signalStore(
       )
     ),
 
-    removeRecipe: rxMethod<string | number>(
+    removeRecipe: rxMethod<string>(
       pipe(
         switchMap((recipeId) => {
           return recipesService.removeRecipe(recipeId).pipe(
@@ -88,7 +92,7 @@ export const RecipesStore = signalStore(
                   recipes: [
                     ...state.recipes.filter((recipe) => recipe.id !== recipeId)
                   ],
-                }))
+                }));
               },
               error: console.error,
               finalize: () => patchState(store, { isLoading: false }),

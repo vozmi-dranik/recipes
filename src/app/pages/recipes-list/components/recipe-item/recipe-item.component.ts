@@ -1,8 +1,8 @@
 import { Component, computed, EventEmitter, input, Output } from '@angular/core';
-import { IRecipe } from 'src/app/models/interfaces/recipe';
 import { RouterLink } from '@angular/router';
 import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { Recipe } from 'graphql/generated';
 
 @Component({
   selector: 'app-recipe-item',
@@ -16,8 +16,8 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './recipe-item.component.scss',
 })
 export class RecipeItemComponent {
-  @Output() recipeForDeleteId = new EventEmitter<string | number>();
-  recipe = input.required<IRecipe>();
+  @Output() recipeForDeleteId = new EventEmitter<string>();
+  recipe = input.required<Recipe>();
   recipeLink = computed<string>(() => `/recipe/${ this.recipe().id }`);
 
   openDeleteRecipeModal() {

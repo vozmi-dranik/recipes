@@ -43,7 +43,7 @@ export class RecipesListComponent implements OnInit {
       });
   }
 
-  removeRecipe(id: string | number) {
+  removeRecipe(id: string) {
     const title = 'Delete Recipe';
     const content = 'Are you sure you want to delete this recipe?';
     this._dialog.open(EnquiryModalComponent, { data: { title, content } }).beforeClosed()
