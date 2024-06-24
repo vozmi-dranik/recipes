@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Add ingredient</h2>
+<mat-dialog-content>
+  @if (form) {
+    <form class="flex flex-col pt-4" [formGroup]="form">
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="name">
+        <mat-error>
+          @if (form.get('name')?.errors; as errors) {
+            @if (errors['required']) {
+              Title is required
+            } @else {
+              Minimum title length is 3
+            }
+          }
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Count</mat-label>
+        <input matInput formControlName="count" type="number">
+        <mat-error>
+          @if (form.get('count')?.errors; as errors) {
+            @if (errors['required']) {
+              Count is required
+            } @else {
+              Minimum count is 0
+            }
+          }
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Measure</mat-label>
+        <input matInput formControlName="measure">
+        <mat-error>
+          @if (form.get('measure')?.errors; as errors) {
+            @if (errors['required']) {
+              Measure is required
+            }
+          }
+        </mat-error>
+      </mat-form-field>
+    </form>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>No</button>
+  <button mat-button cdkFocusInitial (click)="onSubmit()">Ok</button>
+</mat-dialog-actions>

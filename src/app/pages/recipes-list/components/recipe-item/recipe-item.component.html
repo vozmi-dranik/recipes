@@ -1,16 +1,7 @@
 <div class="flex flex-col gap-2 border-2 border-amber-300">
+  <button mat-icon-button (click)="openDeleteRecipeModal()">
+    <mat-icon>close</mat-icon>
+  </button>
   <a routerLink="{{ recipeLink() }}"><h3>{{ recipe().name }}</h3></a>
-  <div>
-    @for (ingredient of recipe().ingredients; track ingredient) {
-    <p>{{ ingredient.name }}
-    {{ ingredient.count }}
-    {{ ingredient.measure }}
-    </p>
-    }
-  </div>
-  @for (step of recipe().steps; track step) {
-  <p>{{ step.description }}</p>
-  }
+  <h4>{{ recipe().description }}</h4>
 </div>
-
-

@@ -3,6 +3,8 @@ query allRecipes {
     id
     name
     description
+    createdAt
+    updatedAt
   }
 }
 
@@ -23,6 +25,8 @@ query recipe($id: ID!) {
       title
       image
     }
+    createdAt
+    updatedAt
   }
 }
 
@@ -33,5 +37,78 @@ mutation CreateRecipe($recipeData: RecipeInput!) {
     id
     name
     description
+    createdAt
+    updatedAt
+  }
+}
+
+mutation DeleteRecipe($id: ID!) {
+  deleteRecipe(
+    id: $id
+  ) {
+    id
+    name
+    description
+  }
+}
+
+mutation UpdateRecipe($id: ID!, $recipeData: RecipeInput!) {
+  updateRecipe(
+    id: $id
+    recipeData: $recipeData
+  ) {
+    id
+    name
+    description
+  }
+}
+
+mutation AddStep($recipeId: ID!, $stepData: StepInput!) {
+  addStep(
+    recipeId: $recipeId
+    stepData: $stepData
+  ) {
+    id
+    name
+    description
+    steps {
+      id
+      description
+      title
+      image
+    }
+    ingredients {
+      id
+      name
+      count
+      measure
+    }
+    createdAt
+    updatedAt
+  }
+}
+
+mutation AddIngredient($recipeId: ID!, $ingredientData: IngredientInput!) {
+  addIngredient(
+    recipeId: $recipeId
+    ingredientData: $ingredientData
+  ) {
+    id
+    name
+    description
+    steps {
+      id
+      description
+      title
+      image
+    }
+    ingredients {
+      id
+      name
+      count
+      measure
+    }
+    createdAt
+    updatedAt
   }
 }

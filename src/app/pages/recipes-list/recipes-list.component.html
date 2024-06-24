@@ -2,12 +2,18 @@
   <div class="bg-fuchsia-300 p-3">
     <h4>Categories</h4>
   </div>
-  <div class="flex flex-col p-3">
-    <input #search (input)="findRecipe(search.value)">
+  <div class="flex flex-col p-3 w-full">
+    <div class="flex justify-between">
+      <mat-form-field class="max-w-[500px]" appearance="outline">
+        <mat-label>search</mat-label>
+        <input matInput #search (input)="findRecipe(search.value)">
+      </mat-form-field>
+      <button mat-stroked-button (click)="addRecipe()">add recipe</button>
+    </div>
     <h2 class="text-fuchsia-900 underline">Choose your favorite recipe</h2>
-    <div class="flex gap-2">
-    @for (recipe of recipes(); track null) {
-      <app-recipe-item [recipe]="recipe"/>
+    <div class="grid grid-cols-3 gap-2">
+      @for (recipe of recipes(); track recipe.id) {
+        <app-recipe-item [recipe]="recipe" (recipeForDeleteId)="removeRecipe($event)"/>
       }
     </div>
   </div>

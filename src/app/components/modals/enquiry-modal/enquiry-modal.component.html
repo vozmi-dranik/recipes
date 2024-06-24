@@ -1,0 +1,10 @@
+@if (data.title) {
+  <h2 mat-dialog-title>{{ data.title }}</h2>
+}
+@if (data.content) {
+  <mat-dialog-content>{{ data.content }}</mat-dialog-content>
+}
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button cdkFocusInitial (click)="onSuggest()">Ok</button>
+</mat-dialog-actions>
