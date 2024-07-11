@@ -1,32 +1,49 @@
 @if (recipe(); as recipe) {
-  <h1>{{ recipe.name }}</h1>
-  <h2>{{ recipe.description }}</h2>
-  <div>
-    <div class="flex justify-between">
-      <h3>ingredients</h3>
-      <button mat-button (click)="addIngredient()">add ingredient</button>
+  <div class="flex flex-col desktop:flex-row">
+    <div class="flex flex-col flex-grow">
+      <h1 class="text-headline-large py-5">{{ recipe.name }}</h1>
+      <h3 class="text-headline-small p-5 text-center">{{ recipe.description }}</h3>
     </div>
-    @for (ingredient of recipe.ingredients; track i; let i = $index) {
-      <div>
-        <span>{{ i }}) </span>
-        <span>{{ ingredient?.name }}</span>
-        <span>{{ ingredient?.count }}</span>
-        <span>{{ ingredient?.measure }}</span>
-      </div>
-    }
+    <div class="w-full desktop:w-[300px] mat-label-medium">
+      <img src="favicon.ico" alt="recipe logo image" class="mx-auto">
+      <h4 class="uppercase">SKILL LEVEL: <span></span></h4>
+      <h4 class="uppercase">PREP: <span></span></h4>
+      <h4 class="uppercase">ASSEMBLY: <span></span></h4>
+      <h4 class="uppercase">MAKES: <span></span></h4>
+    </div>
   </div>
-  <div>
-    <div class="flex justify-between">
-      <h3>steps</h3>
-      <button mat-button (click)="addStep()">add step</button>
-    </div>
-    @for (step of recipe.steps; track i; let i = $index) {
-      <div>
-        <h5>step {{ i }}</h5>
-        <h3>{{ step?.title }}</h3>
-        <p>{{ step?.image }}</p>
-        <p>{{ step?.description }}</p>
+  <div class="flex flex-col desktop:flex-row">
+    <div class="w-full max-w-[440px]">
+      <div class="max-w-[400px]">
+        <div class="bg-surface p-5">
+          <div class="flex justify-between">
+            <h3>ingredients</h3>
+            <button mat-button (click)="addIngredient()">add ingredient</button>
+          </div>
+          @for (ingredient of recipe.ingredients; track i; let i = $index) {
+            <div>
+              <span>{{ i }}) </span>
+              <span>{{ ingredient?.name }}</span>
+              <span>{{ ingredient?.count }}</span>
+              <span>{{ ingredient?.measure }}</span>
+            </div>
+          }</div>
+        <img src="favicon.ico" alt="recipe image" class="object-center object-contain w-full aspect-square p-4">
       </div>
-    }
+    </div>
+    <div class="w-full">
+      <div class="flex justify-between">
+        <h3>steps</h3>
+        <button mat-button (click)="addStep()">add step</button>
+      </div>
+      @for (step of recipe.steps; track i; let i = $index) {
+        <div>
+          <h5>step {{ i }}</h5>
+          <h3>{{ step?.title }}</h3>
+          <p>{{ step?.image }}</p>
+          <p>{{ step?.description }}</p>
+        </div>
+      }
+    </div>
   </div>
 }
