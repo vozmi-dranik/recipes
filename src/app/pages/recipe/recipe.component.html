@@ -1,6 +1,13 @@
 @if (recipe(); as recipe) {
   <div class="flex flex-col desktop:flex-row">
     <div class="flex flex-col flex-grow">
+      <button mat-button (click)="toggleMode()">
+        @if (isEditMode()) {
+          Switch to Edit mode
+        } @else {
+          Switch to View mode
+        }
+      </button>
       <h1 class="text-headline-large py-5">{{ recipe.name }}</h1>
       <h3 class="text-headline-small p-5 text-center">{{ recipe.description }}</h3>
     </div>
@@ -18,7 +25,9 @@
         <div class="bg-surface p-5">
           <div class="flex justify-between">
             <h3>ingredients</h3>
-            <button mat-button (click)="addIngredient()">add ingredient</button>
+            @if (isEditMode()) {
+              <button mat-button (click)="addIngredient()">add ingredient</button>
+            }
           </div>
           @for (ingredient of recipe.ingredients; track i; let i = $index) {
             <div>
@@ -27,14 +36,17 @@
               <span>{{ ingredient?.count }}</span>
               <span>{{ ingredient?.measure }}</span>
             </div>
-          }</div>
+          }
+        </div>
         <img src="favicon.ico" alt="recipe image" class="object-center object-contain w-full aspect-square p-4">
       </div>
     </div>
     <div class="w-full">
       <div class="flex justify-between">
         <h3>steps</h3>
-        <button mat-button (click)="addStep()">add step</button>
+        @if (isEditMode()) {
+          <button mat-button (click)="addStep()">add step</button>
+        }
       </div>
       @for (step of recipe.steps; track i; let i = $index) {
         <div>
