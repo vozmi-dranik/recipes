@@ -22,6 +22,7 @@ export class RecipeComponent implements OnInit {
   private readonly _store = inject(CurrentRecipeStore);
   private readonly _activatedRoute = inject(ActivatedRoute);
   readonly recipe: Signal<Recipe | null> = this._store.recipe;
+  readonly isEditMode: Signal<boolean> = this._store.isEditMode;
   readonly dialog = inject(MatDialog);
 
   addStep() {
@@ -38,6 +39,10 @@ export class RecipeComponent implements OnInit {
       .subscribe((ingredient: IngredientInput) => {
         this._store.addIngredient(ingredient);
       });
+  }
+
+  toggleMode() {
+    this._store.toggleEditMode();
   }
 
   ngOnInit(): void {
