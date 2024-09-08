@@ -2,9 +2,9 @@ import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { ApplicationConfig, inject } from '@angular/core';
 import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
-import { env } from 'src/environments/environment';
+import * as process from 'node:process';
 
-const uri = env.apiUrl;
+const uri = process.env['API_URL'] || '';
 
 export function apolloOptionsFactory(): ApolloClientOptions<any> {
   const httpLink = inject(HttpLink);
