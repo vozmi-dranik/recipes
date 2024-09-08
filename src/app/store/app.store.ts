@@ -8,16 +8,20 @@ interface AppStore {
   user: User | null;
 }
 
-export const appStore = signalStore(
+export const AppStore = signalStore(
   { providedIn: 'root' },
   withState<AppStore>({ user: null }),
   withComputed((_, auth = inject(Auth)) => ({
-    user: computed(() => toSignal(user(auth)))
+    user: toSignal(user(auth), { initialValue: null })
   })),
   withComputed(({ user }) => ({
-    isLoggedIn: computed(() => !!user),
+    isLoggedIn: computed(() => {
+      console.log(user(), 'user');
+      return !!user();
+    }),
   })),
   withMethods((_, authService = inject(AuthService)) => ({
     login: (email: string, password: string) => authService.login(email, password),
+    logout: () => authService.logout(),
   })),
 );

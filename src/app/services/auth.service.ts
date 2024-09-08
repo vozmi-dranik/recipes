@@ -1,15 +1,18 @@
-import { inject, Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, UserCredential } from '@angular/fire/auth';
+import { inject, Injectable, Signal } from '@angular/core';
+import { Auth, signInWithEmailAndPassword, user, User } from '@angular/fire/auth';
+import { toSignal } from '@angular/core/rxjs-interop';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private _auth: Auth = inject(Auth);
+  // todo: check where is better to use that
+  public readonly user: Signal<User | null | undefined> = toSignal(user(this._auth));
 
-  public login(email: string, password: string): Promise<UserCredential> {
+  public login(email: string, password: string) {
     return signInWithEmailAndPassword(this._auth, email, password);
   }
 
-  public async logout(): Promise<void> {
-    return this._auth.signOut()
+  public async logout() {
+    return this._auth.signOut();
   }
 }
