@@ -4,6 +4,7 @@ import { MatIcon } from '@angular/material/icon';
 import { AppStore } from 'src/app/store/app.store';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { User } from '@angular/fire/auth';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ import { User } from '@angular/fire/auth';
     MatIcon,
     MatIconButton,
     MatButton,
+    RouterLink,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
