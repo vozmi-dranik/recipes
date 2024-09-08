@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sed -i "s/\${API_URL}/${API_URL}/g" src/environments/environment.pipeline.ts
+      - run: sed -i "s/\${\(API_URL\|FB_PROJECT_ID\|FB_APP_ID\|FB_DATABASE_URL\|FB_STORAGE_BUCKET\|FB_LOCATION_ID\|FB_API_KEY\|FB_AUTH_DOMAIN\|FB_MESSAGING_SENDER_ID\|FB_MEASUREMENT_ID\)}/\${\1}/g" src/environments/environment.pipeline.ts
       - run: npm ci && npm run gql-generate && npm run build --configuration pipeline
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
