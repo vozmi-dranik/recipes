@@ -2,22 +2,22 @@ import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { inject } from '@angular/core';
 import { RecipesService } from 'src/app/services/recipes.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { debounceTime, distinctUntilChanged, filter, pipe, skipUntil, skipWhile, switchMap, tap, withLatestFrom } from 'rxjs';
+import { debounceTime, distinctUntilChanged, pipe, switchMap, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 import { IngredientInput, Recipe, StepInput } from 'graphql/generated';
 
 type CurrentRecipeState = {
   recipe: Recipe | null;
   isLoading: boolean;
+  isEditMode: boolean;
 };
 
 const initialState: CurrentRecipeState = {
   recipe: null,
   isLoading: false,
+  isEditMode: false
 };
 
-
-// @ts-ignore
 export const CurrentRecipeStore = signalStore(
   withState<CurrentRecipeState>(initialState),
   withMethods((store, recipesService = inject(RecipesService)) => ({
@@ -60,6 +60,7 @@ export const CurrentRecipeStore = signalStore(
           })
         );
       })
-    )
+    ),
+    toggleEditMode: () => patchState(store, { isEditMode: !store.isEditMode() }),
   }))
 );
