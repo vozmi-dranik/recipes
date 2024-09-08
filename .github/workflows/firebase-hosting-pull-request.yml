@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm ci && npm run gql-generate && npm run build
+      - run: sed -i "s/\${API_URL}/${API_URL}/g" src/environments/environment.pipeline.ts
+      - run: npm ci && npm run gql-generate && npm run build --configuration pipeline
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           node-version: 20
