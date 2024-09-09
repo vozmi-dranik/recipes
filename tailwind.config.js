@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{html,ts}",
+    './src/**/*.{html,ts}',
   ],
   theme: {
     colors: {
@@ -46,8 +46,12 @@ module.exports = {
       'l': '1240px',
       'xl': '1440px',
     },
-    extend: {},
+    extend: {
+      height: {
+        'content': 'calc(100% - var(--mat-toolbar-standard-height))',
+      }
+    },
   },
   plugins: [],
-}
+};
 

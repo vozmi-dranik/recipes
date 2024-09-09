@@ -1,5 +1,5 @@
 import { inject, Injectable, Signal } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, user, User } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, user, User } from '@angular/fire/auth';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
@@ -10,6 +10,10 @@ export class AuthService {
 
   public login(email: string, password: string) {
     return signInWithEmailAndPassword(this._auth, email, password);
+  }
+
+  public signUp(email: string, password: string) {
+    return createUserWithEmailAndPassword(this._auth, email, password);
   }
 
   public async logout() {

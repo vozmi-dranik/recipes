@@ -1,27 +1,23 @@
-import { Auth, user, User } from '@angular/fire/auth';
-import { signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
+import { Auth, user } from '@angular/fire/auth';
+import { signalStore, withComputed, withMethods } from '@ngrx/signals';
 import { computed, inject } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-
-interface AppStore {
-  user: User | null;
-}
+import { tap } from 'rxjs';
 
 export const AppStore = signalStore(
   { providedIn: 'root' },
-  withState<AppStore>({ user: null }),
   withComputed((_, auth = inject(Auth)) => ({
-    user: toSignal(user(auth), { initialValue: null })
+    user: toSignal(user(auth), { initialValue: null, pipe: tap(() => console.log('Signal is loading')), }),
   })),
   withComputed(({ user }) => ({
     isLoggedIn: computed(() => {
-      console.log(user(), 'user');
       return !!user();
     }),
   })),
   withMethods((_, authService = inject(AuthService)) => ({
     login: (email: string, password: string) => authService.login(email, password),
     logout: () => authService.logout(),
+    signUp: (email: string, password: string) => authService.signUp(email, password),
   })),
 );
