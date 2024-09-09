@@ -37,8 +37,7 @@ jobs:
       - run: echo "Environment.ts file:"
       - run: cat src/environments/environment.ts
       - run: echo "${{ secrets.API_URL }}"
-      - run: |
-        echo "FB_PROJECT_ID: ${{ secrets.FB_PROJECT_ID }}"
+
       - run: npm ci && npm run gql-generate && npm run build --configuration pipeline
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
