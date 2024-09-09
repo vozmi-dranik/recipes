@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 xs:grid-cols-2 gap-2">
       <div class="flex flex-col items-center justify-center gap-2">
         If you already have an account,
-        <button mat-button routerLink="/login">Login</button>
+        <button mat-button routerLink="/login">log in</button>
       </div>
       <form [formGroup]="signupForm" class="flex flex-col gap-3 items-stretch" (ngSubmit)="onSubmit($event)">
         @for (control of formControls | keyvalue; track $index) {
@@ -19,7 +19,7 @@
               <button
                 mat-icon-button
                 matSuffix
-                class="-my-4"
+                type="button"
                 (click)="onHideClick($event, control.key)"
                 [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="isPasswordHidden()"
@@ -32,7 +32,7 @@
             }
           </mat-form-field>
         }
-        <button mat-flat-button type="submit" class="self-center">Submit</button>
+        <button mat-flat-button class="self-center">sign up</button>
       </form>
     </div>
   </mat-card-content>
