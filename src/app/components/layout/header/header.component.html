@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button routerLink="/">
+    <mat-icon>home</mat-icon>
+  </button>
+  <span>Recipes</span>
+  <span class="flex-auto"></span>
+  @if (isLoggedIn()) {
+    <button mat-icon-button>
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon (click)="logout()">logout</mat-icon>
+    </button>
+  } @else {
+    <button mat-flat-button routerLink="/login">log in</button>
+  }
+</mat-toolbar>

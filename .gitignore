@@ -42,9 +42,13 @@ testem.log
 Thumbs.db
 .angular
 .idea
-.firebase
 
-!/src/environments/environment.ts
+/src/environments/environment.ts
 /src/environments/environment.prod.ts
 .env
 graphql
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

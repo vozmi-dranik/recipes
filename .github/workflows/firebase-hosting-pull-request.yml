@@ -15,6 +15,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: sed -i "s#API_URL#${{ secrets.API_URL }}#g" src/environments/environment.pipeline.ts
+      - run: sed -i "s#FB_PROJECT_ID#${{ secrets.FB_PROJECT_ID }}#g" src/environments/environment.pipeline.ts
+      - run: sed -i "s#FB_APP_ID#${{ secrets.FB_APP_ID }}#g" src/environments/environment.pipeline.ts
+      - run: sed -i "s#FB_DATABASE_URL#${{ secrets.FB_DATABASE_URL }}#g" src/environments/environment.pipeline.ts
+      - run: sed -i "s#FB_STORAGE_BUCKET#${{ secrets.FB_STORAGE_BUCKET }}#g" src/environments/environment.pipeline.ts
+      - run: sed -i "s#FB_LOCATION_ID#${{ secrets.FB_LOCATION_ID }}#g" src/environments/environment.pipeline.ts
+      - run: sed -i "s#FB_API_KEY#${{ secrets.FB_API_KEY }}#g" src/environments/environment.pipeline.ts
+      - run: sed -i "s#FB_AUTH_DOMAIN#${{ secrets.FB_AUTH_DOMAIN }}#g" src/environments/environment.pipeline.ts
+      - run: sed -i "s#FB_MESSAGING_SENDER_ID#${{ secrets.FB_MESSAGING_SENDER_ID }}#g" src/environments/environment.pipeline.ts
+      - run: sed -i "s#FB_MEASUREMENT_ID#${{ secrets.FB_MEASUREMENT_ID }}#g" src/environments/environment.pipeline.ts
+      - run: cp src/environments/environment.pipeline.ts src/environments/environment.ts
+      - run: cp src/environments/environment.pipeline.ts src/environments/environment.prod.ts
+
+      - run: echo "Environment variables:"
+      - run: env
+      - run: echo "Environment variables:"
+      - run: echo "API_URL=$(API_URL)"
+      - run: echo "FB_PROJECT_ID=$(FB_PROJECT_ID)"
+      - run: echo "Environment.ts file:"
+      - run: cat src/environments/environment.ts
+      - run: echo "${{ secrets.API_URL }}"
+
       - run: npm ci && npm run gql-generate && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

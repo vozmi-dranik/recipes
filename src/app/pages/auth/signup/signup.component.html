@@ -1,0 +1,39 @@
+<mat-card appearance="outlined" class="max-w-[500px]">
+  <mat-card-content>
+    <div class="grid grid-cols-1 xs:grid-cols-2 gap-2">
+      <div class="flex flex-col items-center justify-center gap-2">
+        If you already have an account,
+        <button mat-button routerLink="/login">log in</button>
+      </div>
+      <form [formGroup]="signupForm" class="flex flex-col gap-3 items-stretch" (ngSubmit)="onSubmit($event)">
+        @for (control of formControls | keyvalue; track $index) {
+          <mat-form-field appearance="outline">
+            <mat-label>{{ control.key }}</mat-label>
+            <!--            todo: replace with @let when it will be released, don't try to move suffix in the first @if-->
+            @if (passwordHide.get(control.key); as isPasswordHidden) {
+              <input matInput [type]="isPasswordHidden() ? 'password' : 'text'" [formControlName]="control.key"/>
+            } @else {
+              <input matInput type="email" [formControlName]="control.key">
+            }
+            @if (passwordHide.get(control.key); as isPasswordHidden) {
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="onHideClick($event, control.key)"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="isPasswordHidden()"
+              >
+                <mat-icon>{{ isPasswordHidden() ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            }
+            @for (error of control.value.errors | keyvalue; track $index; let first = $first) {
+              <mat-error>{{ error.key | formErrors:error.value }}</mat-error>
+            }
+          </mat-form-field>
+        }
+        <button mat-flat-button class="self-center">sign up</button>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>
