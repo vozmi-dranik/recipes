@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs';
 import { AddRecipeModalComponent } from 'src/app/components/modals/add-recipe-modal/add-recipe-modal.component';
 import { EnquiryModalComponent } from 'src/app/components/modals/enquiry-modal/enquiry-modal.component';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-recipes-list',
@@ -19,17 +20,18 @@ import { EnquiryModalComponent } from 'src/app/components/modals/enquiry-modal/e
     MatFormField,
     MatLabel,
     MatButton,
+    MatProgressSpinner,
   ],
   templateUrl: './recipes-list.component.html',
   styleUrl: './recipes-list.component.scss',
-  // todo: uncomment and use store only for this component when backend is ready
-  // providers: [RecipesStore],
+  providers: [RecipesStore],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecipesListComponent implements OnInit {
   private readonly _store = inject(RecipesStore);
   private readonly _dialog = inject(MatDialog);
   readonly recipes = this._store.recipes;
+  readonly isLoading = this._store.isLoading;
 
   findRecipe(value: string) {
     this._store.updateQuery(value);
@@ -55,6 +57,11 @@ export class RecipesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.initialiseFilter();
+  }
+
+
+  private initialiseFilter() {
     const query = this._store.filter.query;
     this._store.loadByQuery(query);
   }

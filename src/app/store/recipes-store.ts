@@ -2,7 +2,13 @@ import { patchState, signalStore, withComputed, withMethods, withState } from '@
 import { tapResponse } from '@ngrx/operators';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { computed, inject } from '@angular/core';
-import { debounceTime, distinctUntilChanged, filter, pipe, switchMap, tap } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  pipe,
+  switchMap,
+  tap
+} from 'rxjs';
 import { RecipesService } from 'src/app/services/recipes.service';
 import { Router } from '@angular/router';
 import { Recipe, RecipeInput } from 'graphql/generated';
@@ -15,13 +21,11 @@ type RecipesState = {
 
 const initialState: RecipesState = {
   recipes: [],
-  isLoading: false,
+  isLoading: true,
   filter: { query: '', order: 'asc' },
 };
 
 export const RecipesStore = signalStore(
-  // todo: remove when bakend is ready
-  { providedIn: 'root' },
   withState(initialState),
   withComputed(({ recipes, filter }) => ({
     recipesCount: computed(() => recipes().length),
@@ -48,10 +52,9 @@ export const RecipesStore = signalStore(
         switchMap((query) => {
           return recipesService.getByQuery(query).pipe(
             tapResponse({
-              next: (recipes: Recipe[]) => patchState(store, { recipes }),
-              error: console.error,
-              finalize: () => patchState(store, { isLoading: false }),
-            })
+              next: (recipes: Recipe[]) => patchState(store, { recipes, isLoading: false }),
+              error: (error) => {console.error(error); patchState(store, { isLoading: false })},
+            }),
           );
         })
       )
@@ -101,5 +104,5 @@ export const RecipesStore = signalStore(
         })
       )
     )
-  }))
+  })),
 );
