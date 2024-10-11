@@ -69,7 +69,8 @@ export const RecipesStore = signalStore(
                   patchState(store, (state) => ({
                     recipes: [
                       ...state.recipes,
-                      recipe
+                      // todo: remove editable when backend will be ready
+                      { ...recipe, editable: true }
                     ],
                   }));
                 } else {
